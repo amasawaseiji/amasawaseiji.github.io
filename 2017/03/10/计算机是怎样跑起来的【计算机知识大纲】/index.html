@@ -97,6 +97,86 @@ GUI(图形用户界面)
 <li>队列。数组、存放队头数据索引的变量、存放队尾数据索引的变量、存取函数。尾部存储满到最后，会折回数组的开头。逻辑结构变成圆环，循环利用。</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> Queue[<span class="number">100</span>];</div><div class="line"><span class="keyword">char</span> SetIndex = <span class="number">0</span>;</div><div class="line"><span class="keyword">char</span> GetIndex = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Set</span><span class="params">(<span class="keyword">char</span> Data)</span> </span>&#123;</div><div class="line">  Queue[SetIndex] = Data;</div><div class="line">  SetIndex++;</div><div class="line">  <span class="keyword">if</span> (SetIndex &gt;= <span class="number">100</span>) &#123;</div><div class="line">    SetIndex = <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">char</span> <span class="title">Get</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">char</span> Data;</div><div class="line">  Data = Queue[GetIndex];</div><div class="line">  GetIndex++;</div><div class="line">  <span class="keyword">if</span> (GetIndex &gt;= <span class="number">100</span>) &#123;</div><div class="line">    GetIndex = <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> Data;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>链表。c语言中用自我引用的结构体组成的数组表示链表。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> TestResult &#123;</div><div class="line">  <span class="keyword">char</span> Chinese;</div><div class="line">  <span class="keyword">char</span> Math;</div><div class="line">  <span class="keyword">char</span> English;</div><div class="line">  <span class="keyword">struct</span> TestResult* Ptr;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li>二叉树。有2个自我引用结构体的链表。用于搜索数据的算法，如二分查找，更快。<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> TestResult &#123;</div><div class="line">  <span class="keyword">char</span> Chinese;</div><div class="line">  <span class="keyword">char</span> Math;</div><div class="line">  <span class="keyword">char</span> English;</div><div class="line">  <span class="keyword">struct</span> TestResult* Ptr1;</div><div class="line">  <span class="keyword">struct</span> TestResult* Ptr2;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="面向对象编程"><a href="#面向对象编程" class="headerlink" title="面向对象编程"></a>面向对象编程</h4><ul>
+<li>缩写为OOP。C++在C的基础上增加了面向对象的机制。Java、C# 是对C++进一步改良。</li>
+<li>结构体，操作数据的函数在外部。而面向对象编程可以把函数也放在内部。技巧有封装、继承、多态。</li>
+<li>面向对象编程和面向过程编程是一对反义词。</li>
+<li>多态指的是，针对同一消息，不同对象可以进行不同的操作。</li>
+<li>.NET支持C#</li>
+</ul>
+<h4 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h4><ul>
+<li>DBMS缩略语。一张表由行和列组成，列被称为字段、属性，行被称为记录、元组。</li>
+<li>SQL，结构化查询语言。</li>
+<li>关系型数据库。</li>
+<li>客户端、服务端。</li>
+<li>主键和复合主键(多个字段组成)</li>
+<li>CRUD.插入（CREATE）获取(REFER)更新（UPDATE）删除（DELETE）</li>
+</ul>
+<h4 id="TCP-IP网络"><a href="#TCP-IP网络" class="headerlink" title="TCP/IP网络"></a>TCP/IP网络</h4><ul>
+<li>LAN（局域网）</li>
+<li>传输控制协议和网际协议(TCP/IP)</li>
+<li>MAC地址：网卡编号</li>
+<li>WAN（广域网）</li>
+<li>集线器连接计算机，路由器连接互联网。</li>
+<li>以太网网卡</li>
+<li>CSMA/CD 带冲突检测的载波监听多路访问，是连接LAN计算机的方法。多路复用，是多个设备同时访问传输介质。</li>
+<li>MAC地址由厂商编号和产品编号组成，每个都独一无二。</li>
+<li>IP地址是软件上的编号。TCP/IP中传输数据都要带MAC地址和IP地址。IP地址是32比特的整数，8个一组，分4段。IP地址的范围，0.0.0.0~255.255.255.255.前三段是网络地址，后一段是主机地址。子网掩码就是标识出网络地址和主机地址。子网掩码转换的二进制数中，值为1表示网络地址，0的表示主机地址。与MAC地址一样，IP地址也是唯一的。</li>
+<li>DHCP（动态主机设置协议）服务器获取IP地址和子网掩码。</li>
+<li>默认网关存放路由器的IP地址。</li>
+<li>DNS(域名系统)，解析域名为IP地址的服务器。其中记录着域名和IP地址的对应表。</li>
+<li>ARP（地址解析协议），把IP地址转换为MAC地址。使用广播的形式。也有缓存表，记录对应表。</li>
+<li>IP协议指定目标IP地址和路由器转发。TCP协议是双方相互回应确认信号，可靠传输数据。称作握手。通过包这种数据单元。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">MAC信息</td>
+<td style="text-align:center">IP信息</td>
+<td style="text-align:center">TCP信息</td>
+<td style="text-align:center">数据</td>
+<td style="text-align:center">错误检查信息</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>网卡-设备驱动程序-IP协议程序-TCP协议程序-应用程序。层级结构。</li>
+<li>TCP端口号识别上层的应用程序。web使用80，发送邮件25，接收邮件使用110.</li>
+</ul>
+<h4 id="数据加密"><a href="#数据加密" class="headerlink" title="数据加密"></a>数据加密</h4><ul>
+<li>秘钥，用于加密和解密的数字。</li>
+<li>XOR，逻辑异或运算。二进制，同则0，不同则1.</li>
+<li>对称密钥加密技术，特征是加解密密钥相同。密钥的通知不安全，不适用于互联网。</li>
+<li>公开密钥加密技术。加密密钥公开，解密密钥私有。公钥和私钥。</li>
+<li>RSA，实现公开密钥加密技术的算法，三个字母代表三个三个发明者。</li>
+<li>数字签名。MD5,信息摘要。</li>
+</ul>
+<h4 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h4><ul>
+<li>可扩展标记语言。元语言。</li>
+<li>HTML，超文本标记语言。</li>
+<li>&lt; &gt; &amp; “ ‘ 5个特殊字符用&amp;lt &amp;gt &amp;amp &amp;quot &amp;apos 表示。&lt;![CDATA[  ]]&gt; 括起来就可以直接使用上述5种特殊字符了。<!-- --> 表示注释。</li>
+<li>W3C(万维网联盟)</li>
+<li>CSV，只记录了信息，没有给信息赋予意义，比XML差一筹。</li>
+<li>XML命名空间。xmlns=命名空间 的形式。</li>
+<li>SOAP（简单的对象访问协议）用于分布式计算。分布式就是把程序分散在网络连接起来的计算机上。</li>
+</ul>
 </div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2017-03-10</span><i class="fa fa-comment-o"></i><a href="/2017/03/10/计算机是怎样跑起来的【计算机知识大纲】/#comments">评论</a><i class="fa fa-tag"></i><a href="/tags/专读/" title="专读" class="tag">专读 </a></div></div></div></div><div class="share"><div class="evernote"> <a href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank" class="fa fa-bookmark"></a></div><div class="weibo"> <a href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));" class="fa fa-weibo"></a></div><div class="twitter"> <a href="http://twitter.com/home?status=,https://amasawaseiji.github.io/2017/03/10/计算机是怎样跑起来的【计算机知识大纲】/,思过崖,计算机是怎样跑起来的【计算机知识大纲】,;" class="fa fa-twitter"></a></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a role="navigation" href="/2017/03/06/情书/" title="情书" class="btn">下一篇</a></li></ul></div><a id="comments"></a><div data-thread-key="2017/03/10/计算机是怎样跑起来的【计算机知识大纲】/" data-title="计算机是怎样跑起来的【计算机知识大纲】" data-url="https://amasawaseiji.github.io/2017/03/10/计算机是怎样跑起来的【计算机知识大纲】/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"amasawaseiji"};
 (function() {
     var ds = document.createElement('script');
