@@ -3,14 +3,14 @@
 端口号：web 80,邮件 25。
 URI的内容是网页的文件名或者CGI程序。
 HTTP常用的方法是GET,POST，POST的URI通常指向服务器的一个程序。GET能发送的数据只有几百字节，超过这个就"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">思过崖</a></h3><div class="description"><p>日常记录</p></div></div></div><ul class="social-links"><li><a href="http://weibo.com/2656331642"><i class="fa fa-weibo"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai</a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li></div><div class="information"><div class="back_btn"><li><a onclick="window.history.go(-1)" class="fa fa-chevron-left"></a></li></div><div class="avatar"><img src="/asset/avatar.JPG"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>网络入门:网络是怎样连接的</a></h3></div><div class="post-content"><p>这本书在豆瓣评分高达9.3，属于非常好的书一类。通过它，可以了解网络的全貌。</p>
-<h4 id="0"><a href="#0" class="headerlink" title="0"></a>0</h4><h5 id="GET和POST"><a href="#GET和POST" class="headerlink" title="GET和POST"></a>GET和POST</h5><ul>
+<h4 id="0"><a href="#0" class="headerlink" title="0"></a>0</h4><h4 id="GET和POST"><a href="#GET和POST" class="headerlink" title="GET和POST"></a>GET和POST</h4><ul>
 <li>端口号：web 80,邮件 25。</li>
 <li>URI的内容是网页的文件名或者CGI程序。</li>
 <li>HTTP常用的方法是GET,POST，POST的URI通常指向服务器的一个程序。GET能发送的数据只有几百字节，超过这个就要使用POST。GET的消息体中不包含数据。</li>
 <li>HTTP头部字段中Host表示请求的服务器IP地址和端口号。</li>
 <li>响应消息中的状态吗2开头表示成功，4开头表示客户端错误，如404错误。</li>
 </ul>
-<h5 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h5><ul>
+<h4 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h4><ul>
 <li>DNS作用是根据域名查询IP地址。</li>
 <li>TCP/IP结构是由子网通过路由器连接起来的大网络。几台计算机由集线器连接起来构成子网。家用路由器内置了集线器功能。消息经由集线器发送到最近的路由器，再发往下一个路由器。</li>
 <li>IP地址是一串32比特的数字，8比特一组分为4组。</li>
@@ -25,16 +25,16 @@ HTTP常用的方法是GET,POST，POST的URI通常指向服务器的一个程序�
 <li>数据收发分为4个阶段，创建套接字，连接，通信，断开。服务器启动后就会创建好套接字，断开是客户端发起。通过描述符识别不同的套接字。</li>
 <li>套接字加上IP地址和端口号就可以识别具体那台计算机了。端口号是让对方能够识别出套接字的机制。连接开始时，客户端会将这个随便分配的端口号告诉服务器。</li>
 </ul>
-<h4 id="1"><a href="#1" class="headerlink" title="1"></a>1</h4><h5 id="协议栈"><a href="#协议栈" class="headerlink" title="协议栈"></a>协议栈</h5><ul>
+<h4 id="1"><a href="#1" class="headerlink" title="1"></a>1</h4><h4 id="协议栈"><a href="#协议栈" class="headerlink" title="协议栈"></a>协议栈</h4><ul>
 <li>浏览器、邮件一般使用TCP，DNS查询收发较短数据采用UDP.</li>
 <li>IP模块负责收发网络包，IP中还包含ICMP和ARP,ICMP用于告知网络包传送过程中产生的错误。ARP根据IP地址查询以太网MAC地址。</li>
 <li>套接字的实体是存放控制信息的内存空间。</li>
 <li>TCP头部，MAC头部，IP头部。头部用来记录和交换控制信息。</li>
 </ul>
-<h5 id="连接、SYN、ACK"><a href="#连接、SYN、ACK" class="headerlink" title="连接、SYN、ACK"></a>连接、SYN、ACK</h5><ul>
+<h4 id="连接、SYN、ACK"><a href="#连接、SYN、ACK" class="headerlink" title="连接、SYN、ACK"></a>连接、SYN、ACK</h4><ul>
 <li>协议栈将服务器IP地址，端口号传递给TCP模块，客户端先创建一个包含控制信息的头部。接下来将头部中的SYN比特置为1，表示连接，交给IP模块发送。服务器收到后返回响应，头部设置跟客户端发来的一样，除此还要将ACK位置为1，表示收到客户端发来的网络包。客户端收到后，如果SYN为1表示连接成功，还要将ACK位置为1发回服务器，告诉服务器刚才的网络包已收到，服务器收到之后，连接完成。</li>
 </ul>
-<h5 id="发送、MTU、序号、窗口"><a href="#发送、MTU、序号、窗口" class="headerlink" title="发送、MTU、序号、窗口"></a>发送、MTU、序号、窗口</h5><ul>
+<h4 id="发送、MTU、序号、窗口"><a href="#发送、MTU、序号、窗口" class="headerlink" title="发送、MTU、序号、窗口"></a>发送、MTU、序号、窗口</h4><ul>
 <li><p>发送时机有两个因素决定。1个是网络包的最大长度，MTU,在以太网中一般是1500字节，MTU是包含头部的总长度，减去头部的长度叫做MSS。第2个要素是时间，协议栈内部有个计时器，一定时间之后就发送包，即时数据没积累到MSS。浏览器一般是直接发送，不等到填满缓冲区。</p>
 </li>
 <li><p>TCP可以确认对方是否收到包，没收到需要重发。序号用来告知接收方网络包在全部数据中的起始位置，连接操作中，将SYN置1时，将随机的起始序号告诉对方。除了序号还要告知对方包的长度。接收方根据序号和长度算出一共收到多少字节，将这个数值写入ACK号中，发到发送方。</p>
@@ -44,7 +44,7 @@ HTTP常用的方法是GET,POST，POST的URI通常指向服务器的一个程序�
 <li><p>滑动窗口。发送包等待送达确认，如果第二个包等待第一个包的送达确认，效率会很低，所以发送包是按频率发送的，并不等待送达确认。如果频率太块，会导致接收方处理数据的能力，造成接收方缓冲区溢出。所以接收方应该告诉发送方自己缓冲区还有多少空间，这个数据在TCP的窗口字段中，表示接收方还能接受的最大数据长度。ACK号和窗口更新返回可以合并，提高效率。</p>
 </li>
 </ul>
-<h5 id="断开"><a href="#断开" class="headerlink" title="断开"></a>断开</h5><h4 id="术语解释"><a href="#术语解释" class="headerlink" title="术语解释"></a>术语解释</h4><table>
+<h4 id="断开"><a href="#断开" class="headerlink" title="断开"></a>断开</h4><h4 id="术语解释"><a href="#术语解释" class="headerlink" title="术语解释"></a>术语解释</h4><table>
 <thead>
 <tr>
 <th style="text-align:center">简称</th>
