@@ -54,6 +54,48 @@
 </li>
 <li><p>摄像类型 kUTTypeMovie 加入 mediaTypes ，可以将视频存入相册，一个函数。kUTTypeMovie 是 ref 类型的，需要桥接成 NSString</p>
 </li>
+<li><p>长按手势默认识别持续0.5s 以上的触摸</p>
+</li>
+<li><p>基准线，大部分视图的基准线与底边相同。例外是 UITextField，其基准线是文本区域的底边</p>
+</li>
+<li><p>UIImageView 固有内容的大小是显示图片的尺寸</p>
+</li>
+<li><p>dismiss 应该是present 的那个控制器负责 dismiss，需要后面的控制器调用 presentingViewController 属性来获取。</p>
+</li>
+<li><p>模态时负责模态的是该控制器的 root 控制器</p>
+</li>
+<li><p>取沙盒目录是为什么返回的是 array 对象，因为 macOS 的缘故，可能会匹配到多个</p>
+</li>
+<li><p>锁屏进入的是未激活状态 后来运行10s 会进入挂起状态，内存过低时，会终止挂起状态</p>
+</li>
+<li><p>集合类中元素可写入的对象包括 NSString NSNumber NSDate NSData NSArray NSDictionary</p>
+</li>
+<li><p>cell里面包含了 UIScrollView 因为可以左划删除</p>
+</li>
+<li><p>Block对象是在栈中创建的，为了使方法返回时 block不被销毁，使用 copy 可以将 block拷贝到堆中，这样就不会在方法返回时被释放了。block 对捕获的 OC对象有强引用</p>
+</li>
+<li><p>JSON(JavaScript Object Notation)</p>
+</li>
+<li><p>URL 中不许出现空格和双引号，需要转义 stringByAddingPercentEscapesUsingEncodeing:</p>
+</li>
+<li><p>NSURLRequest 默认使用 GET</p>
+</li>
+<li><p>归档的缺点是整存整取，coredata 可以增量读取，更新，删除，插入</p>
+</li>
+<li><p>进入后台会生成快照，启动时代替启动图片</p>
+</li>
+<li><p>状态恢复，没见过的，用到了再翻翻</p>
+</li>
+<li><p>本地化，国际化可以参考</p>
+</li>
+<li><p>NSUserDefault 还跟设置里面对应的应用下的设置有关，没什么卵用</p>
+</li>
+<li><p>弹簧动画，一个是阻尼，从0到1，表示阻力大小，越大越不会弹。另一个是初始速度，通常是0，表示动力大小</p>
+</li>
+<li><p>可以从 UIColor 中取 rgb 的数值，有这个方法</p>
+</li>
+<li><p>仍有一些没写到的，但也可能记不住的，因为这个书多而不深。 </p>
+</li>
 </ul>
 </div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2017-08-27</span><i class="fa fa-comment-o"></i><a href="/2017/08/27/【iOS编程】/#comments">评论</a><i class="fa fa-tag"></i><a href="/tags/iOS-技术/" title="iOS 技术" class="tag">iOS 技术 </a></div></div></div></div><div class="share"><div class="evernote"> <a href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank" class="fa fa-bookmark"></a></div><div class="weibo"> <a href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));" class="fa fa-weibo"></a></div><div class="twitter"> <a href="http://twitter.com/home?status=,https://amasawaseiji.github.io/2017/08/27/【iOS编程】/,思过崖,【iOS编程】,;" class="fa fa-twitter"></a></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a role="navigation" href="/2017/08/18/【图解TCP-IP】/" title="【图解TCP/IP】" class="btn">下一篇</a></li></ul></div><a id="comments"></a><div data-thread-key="2017/08/27/【iOS编程】/" data-title="【iOS编程】" data-url="https://amasawaseiji.github.io/2017/08/27/【iOS编程】/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"amasawaseiji"};
 (function() {
