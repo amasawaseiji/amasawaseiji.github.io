@@ -1,11 +1,11 @@
 extends partial/layout
 
 block site_title
-  != page.tag + " · " + config.title
+    != page.category + " · " + config.title
 
 block description
-  - var desc = '标签：' + page.tag + ' - ' + config.title;
-  meta(name="description", content=desc)
+    - var desc = '分类：' + page.category + ' - ' + config.title;
+    meta(name="description", content=desc)
 
 block content
   .autopagerize_page_element: .content
@@ -13,4 +13,3 @@ block content
       ul.list-with-title
         include mixins
         +postList()
-        +make_pager(__('prev'), __('next'))
