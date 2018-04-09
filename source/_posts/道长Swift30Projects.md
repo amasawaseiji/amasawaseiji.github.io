@@ -2,7 +2,7 @@
 title: 道长Swift30Projects
 date: 2017-09-04 22:49:35
 tags:
-- iOS 技术
+- 专业技术
 ---
 
 这是阅读故胤道长那30个项目时的记录要点，需要配合着[代码](https://github.com/soapyigu/Swift30Projects)看。
