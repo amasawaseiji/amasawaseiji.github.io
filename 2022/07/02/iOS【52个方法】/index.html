@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="天泽圣司"><title>iOS【52个方法】 · 思过崖</title><meta name="description" content="消息结构和函数调用。消息结构：运行时应执行的代码由运行环境决定，运行时查找应执行的方法。接收消息的对象也在运行时处理，如检查对象类型，叫做动态绑定(11条会说)。函数调用：由编译器决定。若函数是多态，运行时按照virtual table(虚方法表)查出应执行的函数实现。
+
+
+运行期组件本质是动态库，"><meta name="keywords"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="short icon" href="/images/favicon.png" type="image/x-icon"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">思过崖</a></h3><div class="description"><p>日常记录</p></div></div></div><ul class="social-links"><li><a href="http://weibo.com/2656331642"><i class="fa fa-weibo"></i></a></li></ul><div class="footer"><a target="_blank" href="/"><span>Theme by </span></a><a href="https://www.caicai.me"> CaiCai</a><span>&</span><a href="https://github.com/Ben02/hexo-theme-Anatole"> Ben</a><div class="by_farbox"><a href="https://hexo.io/zh-cn/" target="_blank">Proudly published with Hexo&#65281;</a></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li></div><div class="information"><div class="back_btn"><li><a onclick="window.history.go(-1)" class="fa fa-chevron-left"></a></li></div><div class="avatar"><img src="/asset/avatar.JPG"></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>iOS【52个方法】</a></h3></div><div class="post-content"><ol>
+<li>消息结构和函数调用。消息结构：运行时应执行的代码由运行环境决定，运行时查找应执行的方法。<strong>接收消息的对象也在运行时处理，如检查对象类型，叫做动态绑定(11条会说)</strong>。函数调用：由编译器决定。若函数是多态，运行时按照virtual table(虚方法表)查出应执行的函数实现。</li>
+</ol>
+<ul>
+<li>运行期组件本质是动态库，含有全部内存管理方法。oc运行期环境抽象出内存管理架构，叫做<strong>引用计数(29条)</strong></li>
+<li>oc中指针用来指示对象。对象内存分配在堆(heap)中，不是栈(stack)上。指针变量指向堆中内存，两个指针变量可指向同一对象。指针变量在栈里，32位架构4字节，64位8字节，内容为指向对象的内存地址。堆内存需直接管理，栈内存栈帧弹出时自动清理。</li>
+<li>c结构体，如CGRect，使用栈空间。如只需保存int、float、char等非对象类型，用结构体就行，用OC对象保存会影响性能，有额外开销如分配和释放内存。</li>
+</ul>
+<ol>
+<li>@class 向前声明(forward declaring)，使用某类，不需知道其全部细节，只需知道类名。.h用@class，.m文件引入某类头文件。减少需引入的头文件数量，.h直接引入，会增加编译时间。</li>
+</ol>
+<ul>
+<li>向前声明解决了两个类互相引用的问题。两个类在头文件里互相引用，会造成循环引用。#include循环引用导致死循环。#import会导致其中一个类无法正确编译。</li>
+<li>声明类遵从协议(protocol)，@interface classA : classB<protocol>，需要知道协议的完整定义，不能使用向前声明。这种情况，最好把协议单独放一个头文件中。若是放其他类的头文件里，因为不能用向前声明，必须引入此头文件。1可能产生互相引用问题，2增加编译时间。</protocol></li>
+<li>代理协议不用单独写一个头文件，因为协议只有与定义代理的类放一起才有意义。此时的做法应该在.m文件里声明代理协议，这部分代码放在class-continuation(私有扩展)里。这样只需在.m文件中引入包含代理协议的头文件即可。<strong>参看27条</strong>。若有属性、实例变量或遵从协议需要引入头文件，应尽量放在私有扩展里。</li>
+<li>作用：<strong>降低类之间耦合，即降低类之间依赖程度，减少编译时间</strong></li>
+</ul>
+<ol>
+<li>字面量语法，能缩减代码长度，易读，整洁，精简，简洁。@”string”,@1(int),@2.5f(float),@3.14159(double),@YES(bool),@’a’(char)。表达式：@(x*y)。字面量创建数组@[@”1”]，取下标arr[1]。</li>
+</ol>
+<ul>
+<li>字面量语法创建数组，有nil会抛异常，因为其实质上是语法糖，效果等于先创建数组再将方括号内对象加入数组中。arrayWithObjects:不会报错，但是会舍弃遇到nil之后的元素。</li>
+<li>字面量语法创建字典，也是一旦有值为nil，就会抛出异常。<strong>验证1：两种方式创建字典，有值为nil会怎样。</strong>dic[@”key”]。</li>
+<li>可变数组、字典可用取下标赋值方式直接修改。mArr[1] = @”xx”，mDic[@”key”] = @”xx”。</li>
+<li>字面量语法创建的字符串、数组、字典都是不可变的。若要变成可变，需要mutableCopy一份。</li>
+</ul>
+<ol>
+<li>#define预处理指令定义常量，等效替换，会替换所有遇到的，无类型信息。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">static const NSTimeInterval kAnimationDuration = 0.3;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>这种方式包含类型信息，清楚描述常量含义。</li>
+<li>命名方法：若常量局限于某.m文件内使用，应加字母k作为前缀。若外部也可见，应以类名为前缀。oc没有命名空间(namespace)。</li>
+<li>声明位置：不公开，应定义在.m文件内，各#import下面。</li>
+<li>const代表不可修改，若修改编译器会报错。static修饰符意为变量仅在定义它的.m文件(编译单元)可见，作用域为.m文件生成的目标文件内(object file)。如果不加static，编译器会将之视为外部符号，若别的.m文件也声明了同名变量，编译会报duplicate symbol 重复符号错误。实际上 static const 效果等同于#define指令，只不过前者带有类型信息。</li>
+<li>全局常量：如通知名称，放在全局符号表(global symbol table)中。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// .h文件</div><div class="line">extern NSString *const EOCStringConstant;</div><div class="line">// .m文件</div><div class="line">NSString *const EOCStringConstant = @&quot;value&quot;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>const表明指针常量不应改变。extern关键字告知编译器，全局符号表将会有该符号，无需查看定义，就允许使用该常量。生成二进制文件后，肯定能找到此常量。这类常量必须定义，只能定义一次。定义在声明该变量头文件相关的.m文件内。编译时存储在数据段(data section)。名称应以类名做前缀，如UIKit中的UIApplicationEnterBackgroundNotification.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">extern const NSTimeInterval kAnimationDuration = 0.3;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>#define 定义常量会被修改，从而引起错误。</li>
+</ul>
+<p>5.</p>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-07-02</span><i class="fa fa-comment-o"></i><a href="/2022/07/02/iOS【52个方法】/#comments">评论</a><i class="fa fa-tag"></i><a href="/tags/图书/" title="图书" class="tag">图书 </a><a href="/tags/专业技术/" title="专业技术" class="tag">专业技术 </a><a href="/tags/iOS/" title="iOS" class="tag">iOS </a></div></div></div></div><div class="share"><div class="evernote"> <a href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank" class="fa fa-bookmark"></a></div><div class="weibo"> <a href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));" class="fa fa-weibo"></a></div><div class="twitter"> <a href="http://twitter.com/home?status=,https://amasawaseiji.github.io/2022/07/02/iOS【52个方法】/,思过崖,iOS【52个方法】,;" class="fa fa-twitter"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a role="navigation" href="/2022/07/20/周记38【4月到7月】/" title="周记38【4月到7月】" class="btn">上一篇</a></li><li class="next pagbuttons"><a role="navigation" href="/2022/05/20/周记37【永远只做正确的选择】/" title="周记37【永远只做正确的选择】" class="btn">下一篇</a></li></ul></div><a id="comments"></a><div data-thread-key="2022/07/02/iOS【52个方法】/" data-title="iOS【52个方法】" data-url="https://amasawaseiji.github.io/2022/07/02/iOS【52个方法】/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"amasawaseiji"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script></div></div></div></div><script src="/js/jquery.js"></script><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script></body></html>
