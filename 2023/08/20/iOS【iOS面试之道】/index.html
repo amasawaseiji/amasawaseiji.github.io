@@ -30,7 +30,101 @@
 <li>搜索旋转有序数组（64页）</li>
 <li>tableView 插值排序，按时间排序。（65页）</li>
 <li>深度优先搜索DFS 用递归，广度优先搜索BFS 用循环，配合队列。</li>
-<li></li>
+<li>前缀树，一种有序树。面试题：查找单词APP，给定字母矩阵，查出其中任意方向任意长度的单词。（73页）</li>
+<li>动态规划，实现斐波那契数列。（75页）</li>
+<li>书籍：算法导论、编程珠玑、剑指Offer</li>
+</ul>
+<h3 id="语言工具"><a href="#语言工具" class="headerlink" title="语言工具"></a>语言工具</h3><ul>
+<li>swift，class 是引用类型，在堆上。struct 是值类型，在栈上。</li>
+<li>是函数式和面向对象编程语言。</li>
+<li>泛型，代码满足任意类型的变量或方法。</li>
+<li>Open，在Module中被访问和重写。Public，Module中被访问。Internal，当前Module中被访问和重写。File-private，当前文件中使用。Private，作用域内使用。</li>
+<li>weak 和 Unowned ，后者被释放后，有无效引用，继续访问会崩溃。</li>
+<li>值类型struct复制时，内存中是同一个对象，直到修改复制后的对象时，才会重新创建一个新对象。</li>
+<li>willSet 可获取newValue，didSet可获取oldValue.</li>
+<li>结构体中修改成员变量的方法，加 mutating 关键字。</li>
+<li>@autoclosure 推迟计算到需要用时。（89页）</li>
+<li>柯里化 Currying 特性，函数式编程思想。（90页）</li>
+<li>求 0-100中为偶数且是其他数字平方的数字，函数式编程，map、fliter的使用。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(0...10).map &#123;$0 * $0&#125;.fliter &#123;$0 % 2 == 0 &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>ARC在编译时管理内存，垃圾收集器在运行时管理内存。</li>
+<li>xcode中检查内存泄露的工具（93页）</li>
+<li>copy 修饰 NSString NSArray NSDictionary，是复制一份对象，指针指向不同地址。</li>
+<li>NSMutableString 不能用copy，这样修改时会崩溃。</li>
+<li>assign 修饰对象 会造成野指针，释放后指针地址仍然存在，堆上容易造成崩溃，栈上会自动处理。所以应修饰基本数据类型。</li>
+<li>atomic 速度慢，比 nonatomic 安全，但不是绝对的线程安全。需要用@synchronized 保证线程安全。</li>
+<li>runloop 每个线程仅有一个，一直运行，响应事件和消息。主线程的runloop默认启动，其他线程默认不启动。用 [NSRunLoop currentRunLoop] 来启动。</li>
+<li>__weak 用于修饰变量，防止block中的循环引用。</li>
+<li>__block 修饰block内部要修改的外部变量。</li>
+<li>block 适用于轻便简单的回调，如网络传输。代理适用于公共接口较多的情况，有利于解耦。block 运行成本高，栈复制到堆或是对象就加计数。代理只是回调对象指针，多个查表的动作。</li>
+<li>用 NSInteger 代替 int, NSInteger 可以在32位和64位计算机中，代表不同的整型数据。int 只表示 32位整型数据。同理 用 NSUInteger 和 CGFloat 代替 unsigned、float.</li>
+<li>属性顺序 原子性、读写顺序、内存管理语义。</li>
+<li>NSString 字面值相等，指针也相等，指向同一个内存。== 可以判定为真，这是编译器优化。</li>
+<li>NSOperationQueue 对象的 addOperationWithBlock 方法，不是在主线程中。</li>
+<li>滑动列表时，timer 会暂停。是因为 runLoop 的 mode 被切换了，从默认模式切换到事件跟踪模式，而timer在默认模式，自然就停止了。5种模式。</li>
+<li>NSDefaultRunLoopMode 默认设置。NSConnectionReplyMode 用于处理NSConnection事件，一般用不到。NSModalPanelRunLoopMode 处理modal panels事件。NSEventTrackingRunLoopMode 拖拽和用户交互时的模式。NSRunLoopCommonModes 模式合集，包括默认、Modal、Event Tracking 3大模式，可以处理所有事件。</li>
+<li>2种方法解决，一是将timer加入到 CommonModes ，二是加入到新开启的线程，然后开启该线程runLoop。（101页）</li>
+<li>swift 有函数式编程、面向对象编程、面向协议编程，注重值类型的数据结构，是静态性语言。oc只有面向对象编程，注重指针和索引，是动态性语言。</li>
+<li>swift的数组、字典、字符串都是值类型，在栈上操作，高效使用内存。也是为了线程安全。</li>
+<li>swift中将协议设计成可选（102页）</li>
+<li>协议可以被class、struct、enum 实现，weak 关键字不能修饰值类型，protocol 前加 @objc 或协议名后加 class （104页）</li>
+<li>oc swift 混编，ProjectName-Bridging-Header.h 或 ProjectName-Swift.h 文件 会自动生成。</li>
+<li>swift初始化方法，convenience 提供便捷初始化方法，必须调用designated初始化方法来完成。 required 关键字强制子类重写父类中所修饰的初始化方法。</li>
+<li>swift中的协议（105）动态特性（107）</li>
+<li>方法交换，应保证原子性和唯一性，尽可能在+load方法中实现，用dispatch_once 实现，保证只运行一次。</li>
+<li>isKindOfClass 和 isMemberOfClass ，前者判断包括子类，后者只包括该类本身的实例。</li>
+<li>给分类添加属性，会报错，提示找不到getter和setter，因为分类不会自动生成这2方法，可以用关联对象实现。</li>
+<li>xcode Buildtime issues 展示警告、错误、静态分析错误（未初始化变量、未使用数据、API使用错误）， Runtime issues 线程问题（数据竞争，多个线程同时写）、UI布局和渲染问题、内存问题（泄露）</li>
+<li>APP启动时长优化，开启环境变量以及方法。（114页）</li>
+<li>检测循环引用（115页）</li>
+<li>EXC_BAD_ACCESS 的处理定位，开启僵尸对象检测（117页）</li>
+<li>playground 执行异步操作、展示tableView (118页)</li>
+</ul>
+<h3 id="系统框架"><a href="#系统框架" class="headerlink" title="系统框架"></a>系统框架</h3><ul>
+<li>storyboard/xib 和纯代码相比的优缺点（120页）</li>
+<li>Auto Layout 和 Frame 区别，框架ComponentKit、Texture、LayoutKit（121页）</li>
+<li>UIView 对比 CALayer (122页)</li>
+<li>frame、bounds、center</li>
+<li>layoutIfNeeded、layoutSubviews、setNeedsLayout 比较(123页)</li>
+<li>safeArea safeAreaLayoutGuide safeAreaInsets 比较（124页）</li>
+<li>UIView Animation 、 CALayer Animation 、 UIViewPropertyAnimator 比较。最后者是iOS 10引进，处理交互式动画</li>
+<li>多屏UI适用，Regular、Compact, 包括iPad上（128页）</li>
+<li>iOS 11 Drag and Drop，app内部拖动图片或跨APP拖动（iPad）（129页）</li>
+<li>collectionView 的 supplenmentary views 和 decoration views ，前者是补充视图、后者是装饰视图。补充视图用于section的header和footer ，装饰视图用于可设置背景。</li>
+<li>列表视图滑动慢的优化（138页）</li>
+<li>预加载问题，ASDK框架（139页）</li>
+<li>实现瀑布流（140页）</li>
+<li>GET POST 对比，session 和 cookie ，4种网络通信协议（143页）</li>
+<li>HTTPS连接和响应的过程（144页）</li>
+<li>URLSession 4个类的比较（144）</li>
+<li>swift做一个网络请求（146）</li>
+<li>APNs推送机制</li>
+<li>swift 编码解码</li>
+<li>数据持久化方案4种，Realm（152）</li>
+<li>3种并发操作，串行并发、同步异步，以及示例</li>
+<li>并发编程的3大问题，竞态条件、优先倒置、死锁（158）</li>
+<li>代码中竞态条件检测，xcode中scheme中 Thread Sanitizer</li>
+<li>竞态条件，解决方案3种（160页）</li>
+<li>GCD 中 dispatch_async、dispatch_after、dispatch_once、dispatch_group_t 4个方法说明</li>
+<li>GCD 中 global 队列 6种优先级</li>
+<li>队列Operations，Operation, BlockOperation, OperationQueue ，操作有4种状态，BlockOperation 可以像 dispatch_group 一样管理多个任务。队列可以实现，暂停、继续、中止、优先顺序、依赖等复杂操作。可以设置最大并行数量。</li>
+<li>Operation 可以取消cancel，但是要根据其 isCancelled 状态，来暂停操作。</li>
+<li>队列有对所有操作都取消的方法。（168页）</li>
+<li>设计模式，7种3类。（169页）</li>
+<li>swift中单例创建</li>
+<li>装饰模式，oc和swift中的应用，分类、代理、swift中的扩展。</li>
+<li>观察者模式，注册时通知中心不会对观察者进行引用计数+1的操作。kvo，swift实现</li>
+<li>备忘录模式，UserDefaults</li>
+</ul>
+<h3 id="5-经验之谈"><a href="#5-经验之谈" class="headerlink" title="5 经验之谈"></a>5 经验之谈</h3><ul>
+<li>5种架构，MVC架构，MVCS，MVP，MVVM</li>
+<li>VIPER 视图驱动的框架，有路由，层级间交互代码多，不适宜用在小型APP</li>
+<li>POP(Protocol Oriented Programming) 面向协议编程。OOP(Object Oriented Programming)面向对象编程</li>
+<li>swift实现二分搜索</li>
+<li>APP崩溃原因分析，模拟器和真机测试，单元测试、性能测试、UI测试、测试覆盖率</li>
+<li>appid codeSigning 应用瘦身，3种类型。审核被拒原因</li>
 </ul>
 </div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-08-20</span><i class="fa fa-comment-o"></i><a href="/2023/08/20/iOS【iOS面试之道】/#comments">评论</a><i class="fa fa-tag"></i><a href="/tags/图书/" title="图书" class="tag">图书 </a><a href="/tags/专业技术/" title="专业技术" class="tag">专业技术 </a><a href="/tags/iOS/" title="iOS" class="tag">iOS </a></div></div></div></div><div class="share"><div class="evernote"> <a href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank" class="fa fa-bookmark"></a></div><div class="weibo"> <a href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));" class="fa fa-weibo"></a></div><div class="twitter"> <a href="http://twitter.com/home?status=,https://amasawaseiji.github.io/2023/08/20/iOS【iOS面试之道】/,思过崖,iOS【iOS面试之道】,;" class="fa fa-twitter"></a></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a role="navigation" href="/2023/08/16/iOS【高性能iOS应用开发】/" title="iOS【高性能iOS应用开发】" class="btn">下一篇</a></li></ul></div><a id="comments"></a><div data-thread-key="2023/08/20/iOS【iOS面试之道】/" data-title="iOS【iOS面试之道】" data-url="https://amasawaseiji.github.io/2023/08/20/iOS【iOS面试之道】/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"amasawaseiji"};
 (function() {
