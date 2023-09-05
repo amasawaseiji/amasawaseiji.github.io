@@ -248,7 +248,7 @@ typedef NS_ENUM(NSUInteger, EOCError) {
 ``` objective-c
 - (void)setDelegate:(id<EOCNetworkFetcherDelegate>)delegate {
   _delegate = delegate;
-  _delegate.didUpdateProgressTo = [delegate respondsToSelector:@selector(networkFetcher:didUpdateProgressTo:)];
+  _delegateFlags.didUpdateProgressTo = [delegate respondsToSelector:@selector(networkFetcher:didUpdateProgressTo:)];
 }
 ```
 
@@ -294,7 +294,7 @@ if (_delegateFlags.didUpdateProgressTo) {
 
 ### 26 分类中不要声明属性
 
-- 分类上可以声明属性，但不要这么做。因为除了扩展，其他分类都无法向类中新增实例变量。属性所需的实例变量无法合成出来。这么做的话，编译器会给出警告信息。提升无法合成实例变量，需要开发者在分类中实现存取方法。如果用@dynamic在运行期提供，并用消息转发机制在运行期拦截方法调用，提供其实现，才可以这样做。
+- 分类上可以声明属性，但不要这么做。因为除了扩展，其他分类都无法向类中新增实例变量。属性所需的实例变量无法合成出来。这么做的话，编译器会给出警告信息。提示无法合成实例变量，需要开发者在分类中实现存取方法。如果用@dynamic在运行期提供，并用消息转发机制在运行期拦截方法调用，提供其实现，才可以这样做。
 - 可以用关联对象解决分类里不能合成实例变量的问题。这样做可行但不建议这么做。因为在内存管理上容易出错，修改属性的内存管理语义，在设置方法里也要改。如果属性是可变的版本，设置时就要拷贝为可变版本。这样容易出错。
 - 属性和实例变量都应定义在主接口里，分类的目标是扩展类功能，而不是封装数据。
 - 只读属性可以在分类中使用，其不需要实例变量，只加一个获取方法。实现了其获取方法，实例变量也不会自动合成了。但也不建议这么做，属性表示有数据支撑，是用来封装数据的。这里应该只声明一个方法用来湖获取值就够了。

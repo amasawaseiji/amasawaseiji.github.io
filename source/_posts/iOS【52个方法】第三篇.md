@@ -49,7 +49,7 @@ class SomeCppClass;
 ``` objective-c
 - (void)setObject:(id)object forKey:(id<NSCopying>)key;
 ```
-- 没有办法令所有类都继承同一个基类，可以创建匿名对象将类包裹一下，使匿名对象成为其子类，遵从协议。
+- 如果没有办法令所有类都继承同一个基类，但这些类都具备某些方法。可以创建匿名对象将这些类包裹一下，使匿名对象成为其子类，遵从协议。
 
 ``` objective-c
 @protocol EOCDatabaseConnection
@@ -219,7 +219,7 @@ for (NSDictionary *record in databaseRecords) {
 
 ### 37 块
 
-- 多线程编程和核心是块与GCD，块可在C、C++、OC、OC++中使用，可将其想对象一样传递。GCD可以适时创建、复用、摧毁后台线程。
+- 多线程编程和核心是块与GCD，块可在C、C++、OC、OC++中使用，可将其像对象一样传递。GCD可以适时创建、复用、摧毁后台线程。
 - Clang是开发iOS程序所用编译器，块是C语言层面的特性。块有其类型，实际是个值，可将其赋值给变量，语法和函数指针类似。
 - 下例中someBlock是变量名，void是返回类型，后面小括号内是参数。
 

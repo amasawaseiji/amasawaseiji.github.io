@@ -26,7 +26,7 @@ tags:
 
 - 代理协议不用单独写一个头文件，因为协议只有与定义代理的类放一起才有意义。此时的做法应该在.m文件里声明代理协议，这部分代码放在class-continuation(私有扩展)里。这样只需在.m文件中引入包含代理协议的头文件即可。
 
-- 若有属性、实例变量或遵从协议需要引入头文件，应尽量放在私有扩展里。作用：**降低类之间耦合，即降低类之间依赖程度，减少编译时间**
+- 若因为要实现属性、实例变量或者需要遵从协议而必须引入头文件，应尽量放在私有扩展里。作用：**降低类之间耦合，即降低类之间依赖程度，减少编译时间**
 
 ### 3
 
@@ -127,7 +127,7 @@ NS_OPTIONS宏在C++模式下可省去类型转换操作，所以需要按位或�
 
 ### 6
 
-- 在类定义下使用  @public @private (即在@interface xx:NSObject {} 大括号中)定义变量的作用域存在问题，对象布局在编译期就已固定，使用偏移量硬编码，表示变量距离对象内存区域多远。修改类定义之后必须重新编译，不然就会出错。oc应对此问题的办法是把实例变量当做存储偏移量所用的特殊变量，由类对象保管。这样偏移量在运行期查找，定义变了偏移量也变了，就总能使用正确的偏移量。还可以在运行期向类中新增实例变量。可在分类或实现文件中定义实例变量。
+- 在类定义下使用  @public @private (即在@interface xx:NSObject {} 大括号中)定义变量的作用域存在问题，对象布局在编译期就已固定，使用偏移量硬编码，表示变量距离对象内存区域多远。修改类定义之后必须重新编译，不然就会出错。oc应对此问题的办法是把实例变量当做存储偏移量所用的特殊变量，由类对象保管。这样偏移量在运行期查找，定义变了偏移量也变了，就总能使用正确的偏移量。还可以在运行期向类中新增实例变量。可在扩展或实现文件中定义实例变量。
 
 - @property 属性，编译器会自动写出一套存取方法，用于访问变量。这个过程由编译器在编译期执行。除此之外，编译器还会向类中添加实例变量，并在属性名前加下划线作为变量名。访问属性使用点语法，相当于调用存取方法。
 
@@ -143,7 +143,7 @@ NS_OPTIONS宏在C++模式下可省去类型转换操作，所以需要按位或�
 
 - 属性特质（attribute）分四类。
 - 其一原子性：某操作具备整体性，其中间步骤生成的临时结果，其他部分看不到，只能看到操作前后的结果。编译器合成的方法默认是原子的，否则写成nonatomic。自定义存取方法应遵从与其特质相符的原子性。
-- 其二读写权限，readwrite，拥有获取方法和设置方法。如果属性由@synthesize实现，则编译器自动生成这两个方法。（？存疑）。readonly 仅有获取方法，仅当属性由@synthesize实现，编译器为其合成获取方法。
+- 其二读写权限，readwrite，拥有获取方法和设置方法。如果属性由@synthesize实现，则编译器自动生成这两个方法。readonly 仅有获取方法，仅当属性由@synthesize实现，编译器为其合成获取方法。（备注：@synthesize 是默认实现，只要不是@dynamic，就是@synthesize）
 - 内存管理语义。assign,设置方法执行纯量类型的赋值(CGFloat或NSInteger)，strong,拥有关系，设置新值时会先保留新值，释放旧值，再将新值设置上去。weak,不保留新值，不释放旧值，同assign类似，属性对象摧毁时，值会清空，nil out. unsafe_untrtained,同assign相同，适用于对象类型，属性对象摧毁时，值不会清空。copy,与strong类似，设置方法不保留新值，而是拷贝，例如NSString*,用此特质保护其封装性。其有NSMutableString子类，不为copy则属性值可被改动，copy确保对象值不会无意间改动。
 - 方法名，getter=name,指定获取方法的方法名，例@property (getter=isOn) Bool on;setter=name,不常见。
 - 自己实现存取方法，应保证具备属性所声明的特质。copy特质的属性，其设置方法里应用copy复制。
@@ -156,7 +156,7 @@ NS_OPTIONS宏在C++模式下可省去类型转换操作，所以需要按位或�
 - 直接访问速度快，直接访问实例变量的那块内存。绕过了属性定义的内存管理语义。不会触发键值观测KVO.
 - 通过属性访问，有助于排查错误，可在存取方法里打断点。
 - 初始化方法中，应直接访问实例变量，为什么？因为子类可能会覆写设置方法。在父类初始化方法中，将属性设置一个值，若是用设置方法来做，调的是子类的设置方法。（子类没实现初始化方法而使用子类的情况）
-- 初始化方法中必须调用设置方法，实例变量声明在父类，子类中无法直接访问的情况。(?存疑，代码中是哪种情形)
+- 初始化方法中必须调用设置方法，实例变量声明在父类，子类中无法直接访问的情况。
 - 懒加载，必须用获取方法。为什么？懒加载的意思是初始化的时候不给属性赋值，使用获取方法的时候才赋值。直接访问，可能会得到未设置值的实例变量。
 
 ### 8
@@ -225,6 +225,7 @@ if ([maybeAnArray isKindOfClass:[NSArray class]]) {
 ### 10
 
 - 关联对象，设置关联对象通过键来区分，可指明存储策略，以维护内存管理语义。存储策略是个枚举。
+
 |枚举类型|等效于|
 |:-:|:-:|
 |OBJC_ASSOCIATION_ASSIGN|assign|
@@ -268,7 +269,7 @@ objc_msgSend(obj, @selector(messageName:), parameter);
 ### 12 消息转发机制
 
 - 向类发送了无法解读的消息不会报错，因为运行期还可以向类中添加方法。无法解读时，启动消息转发机制。
-- unrecognized selector sent to instance ,这种提示信息就表明启动了转发机制，转发给NSObject的默认实现。这种异常是由NSObject的 doesNotRecognizeSelector 方法抛出的。__NSFCNumber 是实现无缝桥接的内部类，配置NSNumber对象时会一并创建。
+- unrecognized selector sent to instance ,这种提示信息就表明启动了转发机制，转发给NSObject的默认实现。这种异常是由NSObject的 doesNotRecognizeSelector 方法抛出的。__NSCFNumber 是实现无缝桥接的内部类，配置NSNumber对象时会一并创建。
 - 消息转发，第一先看接收者是否能动态添加方法来处理未知的选择子，这叫动态方法解析。第二看有没有其他对象能处理消息，有就转发给该对象，结束。没有则启动完整的消息转发机制，把与消息有关的全部细节封装到NSInvocation对象中，给接收者最后一次机会，令其解决未处理的消息。
 - 动态方法解析，首先调用类的下列方法。表示该类能否新增一个实例方法处理此选择子。如果未实现的方法是类方法，那么会调用resolveClassMethod。前提是相关方法实现已写好，运行的时候动态插入。
 
@@ -324,8 +325,8 @@ void method_exchangeImplementations(Method m1, Method m2)
 Method class_getInstanceMethod(Class aClass, SEL aSelector)
 ```
 ``` objective-c
-Method originalMethod = class_getInstance([NSString class], @selector(lowercaseString));
-Method swappedMethod = class_getInstance([NSString class], @selector(uppercaseString));
+Method originalMethod = class_getInstanceMethod([NSString class], @selector(lowercaseString));
+Method swappedMethod = class_getInstanceMethod([NSString class], @selector(uppercaseString));
 method_exchangeImplementations(originalMethod, swappedMethod);
 ```
 - 为既有方法添加新功能，有意义的，可写在分类中。下列方法看上去会陷入死循环，实际上不会，因为在运行期eoc_myLowercaseString将和lowercaseString交换。实现两个方法交换，即可实现调用lowercaseString而额外输出一些内容。

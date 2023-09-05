@@ -9,7 +9,7 @@ tags:
 
 ### 41 派发队列与同步锁
 
-- 内置的同步块，根据给定的对象创建锁，等待块中的代码执行完毕。滥用会降低代码效率，若在self上频繁加锁，程序必须按顺序执行，可能要等一段其他代码执行完毕，才能执行当前代码。不能保证完全的线程安全，同一线程多次调用获取值，可能有其他线程改写值，而导致获取的结果不同。
+- 内置的同步锁，根据给定的对象创建锁，等待块中的代码执行完毕。滥用会降低代码效率，若在self上频繁加锁，程序必须按顺序执行，可能要等一段其他代码执行完毕，才能执行当前代码。不能保证完全的线程安全，同一线程多次调用获取值，可能有其他线程改写值，而导致获取的结果不同。
 
 ``` objective-c
 @synchronized(self) {
@@ -317,7 +317,7 @@ dispatch_sync(queueB, ^{
 
 ### 48 块枚举
 
-- for循环方向遍历比其他方式简单
+- for循环方式遍历比其他方式简单
 - NSEnumerator 抽象基类，定义了2个方法。nextObject返回枚举里的下个对象，全部对象返回之后，就会返回nil。遍历字典和set也可用一样的写法
 
 ``` objective-c
@@ -353,7 +353,7 @@ for (id obj in [anArray reverseObjectEnumerator]) {
 ``` objective-c
 - (void)enumerateObjectsUsingBlock:(void(^)(id obj, NSUInteger idx, BOOL *stop))block
 - (void)enumerateObjectsWithOptions:(NSEnumerationOptions)options UsingBlock:(void(^)(id obj, NSUInteger idx, BOOL *stop))block
-//可以反向遍历NSEnumerationReverse，只有遍历块或有序set这样设置才有意义
+//可以反向遍历NSEnumerationReverse，只有遍历块数组或有序set这样设置才有意义
 //NSEnumerationOptions 取值可用按位或。也可以并发执行块NSEnumerationConcurrent
 - (void)enumerateKeysAndObjectsUsingBlock:(void(^)(id key, id obj, BOOL *stop))block
 
@@ -440,7 +440,7 @@ typedef const void* (*CFDictionaryRetainCallBack) (
 }
 @end
 ```
-- NSPurgeableData 是 NSMutableData子类，实现了NSDiscardableContent协议，如果某对象所占内存能随时丢弃，就可实现该协议的方法。协议里有isContentDiscarded方法，可查询相关内存释放已释放。
+- NSPurgeableData 是 NSMutableData子类，实现了NSDiscardableContent协议，如果某对象所占内存能随时丢弃，就可实现该协议的方法。协议里有isContentDiscarded方法，可查询相关内存是否已释放。
 - NSPurgeableData 对象有beginContentAccess和endContentAccess方法，告诉系统不可丢弃和可丢弃的状态变化。与cache搭配使用，当其被系统丢弃时，也会自动从缓存中移除。
 
 ``` objective-c
