@@ -128,7 +128,7 @@ id类型能指代任意oc对象，对象类型并非在编译期就绑定好，�
 <li>数据源模式旨在向类提供信息。可以把能否响应协议的某个方法这一信息缓存起来，优化程序效率。可以使用位段数据结构，这一c语言特性，把结构体中某个字段所占的二进制位个数设为特定值。值设为1表示1个二进制位。可以把实现缓存功能的代码放在delegate属性的设置方法中。调用方法时，检测结构体里的标志即可。如果某一方法需要多次调用，这项优化可提高程序效率。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@interface EOCNetworkFetcher() &#123;</div><div class="line">  struct &#123;</div><div class="line">    unsigned int didUpdateProgressTo : 1;</div><div class="line">  &#125; _delegateFlags;</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)setDelegate:(id&lt;EOCNetworkFetcherDelegate&gt;)delegate &#123;</div><div class="line">  _delegate = delegate;</div><div class="line">  _delegate.didUpdateProgressTo = [delegate respondsToSelector:@selector(networkFetcher:didUpdateProgressTo:)];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)setDelegate:(id&lt;EOCNetworkFetcherDelegate&gt;)delegate &#123;</div><div class="line">  _delegate = delegate;</div><div class="line">  _delegateFlags.didUpdateProgressTo = [delegate respondsToSelector:@selector(networkFetcher:didUpdateProgressTo:)];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">if (_delegateFlags.didUpdateProgressTo) &#123;</div><div class="line">  [_delegate networkFetcher:self didUpdateProgressTo:currentProgress];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="24-分类"><a href="#24-分类" class="headerlink" title="24 分类"></a>24 分类</h3><ul>
 <li>把代码按逻辑划分到几个分区中，都开发和调试有好处。可以把分类拆到各自的文件中去，EOCPerson+Friendship(.h/.m)，使用时要引入分类的头文件。</li>
@@ -143,7 +143,7 @@ id类型能指代任意oc对象，对象类型并非在编译期就绑定好，�
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@interface NSString (ABC_HTTP)</div><div class="line">- (NSString *)abc_urlEncodedString;</div><div class="line">@end</div></pre></td></tr></table></figure>
 <h3 id="26-分类中不要声明属性"><a href="#26-分类中不要声明属性" class="headerlink" title="26 分类中不要声明属性"></a>26 分类中不要声明属性</h3><ul>
-<li>分类上可以声明属性，但不要这么做。因为除了扩展，其他分类都无法向类中新增实例变量。属性所需的实例变量无法合成出来。这么做的话，编译器会给出警告信息。提升无法合成实例变量，需要开发者在分类中实现存取方法。如果用@dynamic在运行期提供，并用消息转发机制在运行期拦截方法调用，提供其实现，才可以这样做。</li>
+<li>分类上可以声明属性，但不要这么做。因为除了扩展，其他分类都无法向类中新增实例变量。属性所需的实例变量无法合成出来。这么做的话，编译器会给出警告信息。提示无法合成实例变量，需要开发者在分类中实现存取方法。如果用@dynamic在运行期提供，并用消息转发机制在运行期拦截方法调用，提供其实现，才可以这样做。</li>
 <li>可以用关联对象解决分类里不能合成实例变量的问题。这样做可行但不建议这么做。因为在内存管理上容易出错，修改属性的内存管理语义，在设置方法里也要改。如果属性是可变的版本，设置时就要拷贝为可变版本。这样容易出错。</li>
 <li>属性和实例变量都应定义在主接口里，分类的目标是扩展类功能，而不是封装数据。</li>
 <li>只读属性可以在分类中使用，其不需要实例变量，只加一个获取方法。实现了其获取方法，实例变量也不会自动合成了。但也不建议这么做，属性表示有数据支撑，是用来封装数据的。这里应该只声明一个方法用来湖获取值就够了。</li>
